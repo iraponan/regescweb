@@ -5,6 +5,7 @@ import br.eti.inovareti.regescweb.enums.StatusProfessor;
 import br.eti.inovareti.regescweb.models.Professor;
 import br.eti.inovareti.regescweb.repositories.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class ProfessorController {
     @GetMapping("/new")
     public ModelAndView nnew(RequisicaoFormProfessor novoProfessor) {
         ModelAndView mv = new ModelAndView("htmls/professores/new");
-        mv.addObject("listStatusProfessor", StatusProfessor.values());
+        mv.addObject("listaStatusProfessor", StatusProfessor.values());
         return mv;
     }
 
@@ -42,7 +43,7 @@ public class ProfessorController {
         if (bindingResult.hasErrors()) {
             System.out.println("\n********** FORMULARIO COM ERROS **********\n");
             ModelAndView mv = new ModelAndView("htmls/professores/new");
-            mv.addObject("listStatusProfessor", StatusProfessor.values());
+            mv.addObject("listaStatusProfessor", StatusProfessor.values());
             return mv;
         }
         else {
@@ -83,7 +84,7 @@ public class ProfessorController {
     @PostMapping("/{id}")
     public ModelAndView update(@PathVariable Long id, @Valid RequisicaoFormProfessor novoProfessor, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            ModelAndView mv = new ModelAndView("professores/edit");
+            ModelAndView mv = new ModelAndView("htmls/professores/edit");
             mv.addObject("professorId", id);
             mv.addObject("listaStatusProfessor", StatusProfessor.values());
             return mv;
@@ -110,6 +111,23 @@ public class ProfessorController {
         ModelAndView mv = new ModelAndView("redirect:/professores");
         mv.addObject("mensagem", msg);
         mv.addObject("erro", true);
+        return mv;
+    }
+
+    @GetMapping("/{id}/delete")
+    public ModelAndView delete(@PathVariable Long id) {
+        ModelAndView mv = new ModelAndView("redirect:/professores");
+
+        try {
+            this.professorRepository.deleteById(id);
+            mv.addObject("mensagem", "Professor #" + id + " deletado com sucesso!");
+            mv.addObject("erro", false);
+        }
+        catch (EmptyResultDataAccessException e) {
+            System.out.println(e);
+            mv = this.retornaErroProfessor("DELETE ERROR: Professor #" + id + " não encontrado no banco!");
+        }
+
         return mv;
     }
 }
