@@ -6,10 +6,12 @@ import br.eti.inovareti.regescweb.models.Professor;
 import br.eti.inovareti.regescweb.repositories.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -35,12 +37,15 @@ public class ProfessorController {
 
     // Web Parameter Tampering.
     @PostMapping("/professores")
-    public ModelAndView create(RequisicaoNovoProfessor novoProfessor) {
-        Professor professor = novoProfessor.toProfessor();
-        ModelAndView mv = new ModelAndView("redirect:/professores");
-//        System.out.println("\n" + novoProfessor + "\n");
-//        System.out.println("\n" + professor + "\n");
-        this.professorRepository.save(professor);
-        return mv;
+    public String create(@Valid RequisicaoNovoProfessor novoProfessor, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("\n********** FORMULARIO COM ERROS **********\n");
+            return "redirect:/professor/new";
+        }
+        else {
+            Professor professor = novoProfessor.toProfessor();
+            this.professorRepository.save(professor);
+            return "redirect:/professores";
+        }
     }
 }

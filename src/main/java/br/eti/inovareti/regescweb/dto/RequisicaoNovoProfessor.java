@@ -3,11 +3,18 @@ package br.eti.inovareti.regescweb.dto;
 import br.eti.inovareti.regescweb.enums.StatusProfessor;
 import br.eti.inovareti.regescweb.models.Professor;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 // É uma classe DTO (Data Transfer Object) evita inserções maliciosas.
 public class RequisicaoNovoProfessor {
+    @NotBlank
+    @NotNull
     private String nome;
+    @NotNull
+    @DecimalMin(value = "0.0")
     private BigDecimal salario;
     private StatusProfessor statusProfessor;
 
