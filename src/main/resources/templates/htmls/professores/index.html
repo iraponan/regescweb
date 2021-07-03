@@ -30,9 +30,9 @@
                             <th class="col-4" th:text="${professor.getNome()}">Nome do Professor</th>
                             <th class="col-2" th:text="${professor.getSalario()}">Salário</th>
                             <th class="col-2" th:text="${professor.getStatusProfessor()}">STATUS</th>
-                            <th class="col-1"><a href="#">Detalhes</a></th>
-                            <th class="col-1"><a href="#">Editar</a></th>
-                            <th class="col-1"><a href="#">Deletar</a></th>
+                            <td class="col-1"><a th:href="@{/professores/{professorId}(professorId = ${professor.id})}">Detalhes</a></td>
+                            <td class="col-1"><a th:href="@{/professores/{professorId}/edit(professorId = ${professor.id})}">Editar</a></td>
+                            <td class="col-1"><a th:href="@{/professores/{professorId}/delete(professorId = ${professor.id})}">Deletar</a></td>
                         </tr>
                     </tbody>
                 </table>
