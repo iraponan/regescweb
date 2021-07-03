@@ -1,33 +1,15 @@
-package br.eti.inovareti.regescweb.models;
+package br.eti.inovareti.regescweb.dto;
 
 import br.eti.inovareti.regescweb.enums.StatusProfessor;
-import com.sun.istack.NotNull;
+import br.eti.inovareti.regescweb.models.Professor;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
-public class Professor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
+// É uma classe DTO (Data Transfer Object) evita inserções maliciosas.
+public class RequisicaoNovoProfessor {
     private String nome;
     private BigDecimal salario;
-    @Enumerated(EnumType.STRING)
     private StatusProfessor statusProfessor;
-
-    public Professor() { }
-
-    public Professor(String nome, BigDecimal salario, StatusProfessor statusProfessor) {
-        this.nome = nome;
-        this.salario = salario;
-        this.statusProfessor = statusProfessor;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     public String getNome() {
         return nome;
@@ -51,5 +33,13 @@ public class Professor {
 
     public void setStatusProfessor(StatusProfessor statusProfessor) {
         this.statusProfessor = statusProfessor;
+    }
+
+    public Professor toProfessor() {
+        Professor professor = new Professor();
+        professor.setNome(this.nome);
+        professor.setSalario(this.salario);
+        professor.setStatusProfessor(this.statusProfessor);
+        return professor;
     }
 }

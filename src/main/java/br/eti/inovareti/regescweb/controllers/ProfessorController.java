@@ -1,5 +1,6 @@
 package br.eti.inovareti.regescweb.controllers;
 
+import br.eti.inovareti.regescweb.dto.RequisicaoNovoProfessor;
 import br.eti.inovareti.regescweb.enums.StatusProfessor;
 import br.eti.inovareti.regescweb.models.Professor;
 import br.eti.inovareti.regescweb.repositories.ProfessorRepository;
@@ -34,9 +35,12 @@ public class ProfessorController {
 
     // Web Parameter Tampering.
     @PostMapping("/professores")
-    public ModelAndView create(Professor professor) {
+    public ModelAndView create(RequisicaoNovoProfessor novoProfessor) {
+        Professor professor = novoProfessor.toProfessor();
         ModelAndView mv = new ModelAndView("redirect:/professores");
-        //System.out.println("\n" + professor + "\n");
+//        System.out.println("\n" + novoProfessor + "\n");
+//        System.out.println("\n" + professor + "\n");
+        this.professorRepository.save(professor);
         return mv;
     }
 }
