@@ -107,13 +107,6 @@ public class ProfessorController {
         }
     }
 
-    private ModelAndView retornaErroProfessor(String msg) {
-        ModelAndView mv = new ModelAndView("redirect:/professores");
-        mv.addObject("mensagem", msg);
-        mv.addObject("erro", true);
-        return mv;
-    }
-
     @GetMapping("/{id}/delete")
     public ModelAndView delete(@PathVariable Long id) {
         ModelAndView mv = new ModelAndView("redirect:/professores");
@@ -128,6 +121,13 @@ public class ProfessorController {
             mv = this.retornaErroProfessor("DELETE ERROR: Professor #" + id + " não encontrado no banco!");
         }
 
+        return mv;
+    }
+
+    private ModelAndView retornaErroProfessor(String msg) {
+        ModelAndView mv = new ModelAndView("redirect:/professores");
+        mv.addObject("mensagem", msg);
+        mv.addObject("erro", true);
         return mv;
     }
 }
