@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 // É uma classe DTO (Data Transfer Object) evita inserções maliciosas.
-public class RequisicaoNovoProfessor {
+public class RequisicaoFormProfessor {
     @NotBlank
     @NotNull
     private String nome;
@@ -48,5 +48,11 @@ public class RequisicaoNovoProfessor {
         professor.setSalario(this.salario);
         professor.setStatusProfessor(this.statusProfessor);
         return professor;
+    }
+
+    public void fromProfessor(Professor professor) {
+        this.nome = professor.getNome();
+        this.salario = professor.getSalario();
+        this.statusProfessor = professor.getStatusProfessor();
     }
 }
