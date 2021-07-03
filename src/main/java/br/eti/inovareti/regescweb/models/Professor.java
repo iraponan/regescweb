@@ -29,10 +29,6 @@ public class Professor {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -55,5 +51,15 @@ public class Professor {
 
     public void setStatusProfessor(StatusProfessor statusProfessor) {
         this.statusProfessor = statusProfessor;
+    }
+
+    @Override
+    public String toString() {
+        return "Professor{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", salario=" + salario +
+                ", statusProfessor=" + statusProfessor +
+                '}';
     }
 }
