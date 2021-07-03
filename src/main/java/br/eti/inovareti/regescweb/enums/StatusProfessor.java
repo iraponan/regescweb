@@ -4,5 +4,6 @@ public enum StatusProfessor {
     ATIVO,
     INATIVO,
     APOSENTADO,
-    AFASTADO;
+    AFASTADO,
+    DEMITIDO;
 }

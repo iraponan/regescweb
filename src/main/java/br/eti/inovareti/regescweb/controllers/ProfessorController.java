@@ -2,30 +2,36 @@ package br.eti.inovareti.regescweb.controllers;
 
 import br.eti.inovareti.regescweb.enums.StatusProfessor;
 import br.eti.inovareti.regescweb.models.Professor;
+import br.eti.inovareti.regescweb.repositories.ProfessorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
 public class ProfessorController {
 
-    @GetMapping("/professores")
+    @Autowired
+    private ProfessorRepository professorRepository;
+
+    @GetMapping("/professor")
     public ModelAndView index() {
         ModelAndView mv = new ModelAndView("htmls/professores/index");
-        Professor batman = new Professor("Batman", new BigDecimal(5000.0), StatusProfessor.ATIVO);
-        batman.setId(1L);
-        Professor coringa = new Professor("Coringa", new BigDecimal(10000.0), StatusProfessor.APOSENTADO);
-        coringa.setId(2L);
-        Professor mulherMaravilha = new Professor("Mulher Maravilha", new BigDecimal(25000.0), StatusProfessor.INATIVO);
-        mulherMaravilha.setId(3L);
 
-        List<Professor> professors = Arrays.asList(batman, coringa, mulherMaravilha);
+        List<Professor> professors = this.professorRepository.findAll();
 
         mv.addObject("professores", professors);
+
+        return mv;
+    }
+
+    @GetMapping("/professor/new")
+    public ModelAndView nnew() {
+        ModelAndView mv = new ModelAndView("htmls/professores/new");
+
+        mv.addObject("statusProfessor", StatusProfessor.values());
 
         return mv;
     }
