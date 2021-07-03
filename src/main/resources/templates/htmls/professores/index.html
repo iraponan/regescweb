@@ -26,20 +26,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th class="col-1" scope="row">1</th>
-                            <th class="col-4">Batman</th>
-                            <th class="col-2">R$ 5000.0</th>
-                            <th class="col-2">ATIVO</th>
-                            <th class="col-1"><a href="#">Detalhes</a></th>
-                            <th class="col-1"><a href="#">Editar</a></th>
-                            <th class="col-1"><a href="#">Deletar</a></th>
-                        </tr>
-                        <tr>
-                            <th class="col-1" scope="row">2</th>
-                            <th class="col-4">Coringa</th>
-                            <th class="col-2">R$ 10000.0</th>
-                            <th class="col-2">APOSENTADO</th>
+                        <tr th:each="professor : ${professores}">
+                            <th class="col-1" scope="row" th:text="${professor.getId()}">ID</th>
+                            <th class="col-4" th:text="${professor.getNome()}">Nome do Professor</th>
+                            <th class="col-2" th:text="${professor.getSalario()}">Salário</th>
+                            <th class="col-2" th:text="${professor.getStatusProfessor()}">STATUS</th>
                             <th class="col-1"><a href="#">Detalhes</a></th>
                             <th class="col-1"><a href="#">Editar</a></th>
                             <th class="col-1"><a href="#">Deletar</a></th>
