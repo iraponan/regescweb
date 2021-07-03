@@ -30,7 +30,7 @@ public class ProfessorController {
     }
 
     @GetMapping("/professores/new")
-    public ModelAndView nnew() {
+    public ModelAndView nnew(RequisicaoNovoProfessor novoProfessor) {
         ModelAndView mv = new ModelAndView("htmls/professores/new");
         mv.addObject("listStatusProfessor", StatusProfessor.values());
         return mv;
@@ -50,11 +50,5 @@ public class ProfessorController {
             this.professorRepository.save(professor);
             return new ModelAndView("redirect:/professores");
         }
-    }
-
-    @ModelAttribute(value = "requisicaoNovoProfessor")
-    public RequisicaoNovoProfessor getRequisicaoNovoProfessor()
-    {
-        return new RequisicaoNovoProfessor();
     }
 }
