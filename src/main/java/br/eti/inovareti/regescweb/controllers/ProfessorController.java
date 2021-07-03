@@ -62,7 +62,8 @@ public class ProfessorController {
             mv.addObject(professor);
             return mv;
         } else {
-            return new ModelAndView("redirect:/professores");
+            System.out.println("$$$$$$$$$$$ NÃO ACHOU O PROFESSOR DE ID "+ id + " $$$$$$$$$$$");
+            return this.retornaErroProfessor("SHOW ERROR: Professor #" + id + " não encontrado no banco!");
         }
     }
 
@@ -77,7 +78,8 @@ public class ProfessorController {
             mv.addObject("listaStatusProfessor", StatusProfessor.values());
             return mv;
         } else {
-            return new ModelAndView("redirect:/professores");
+            System.out.println("$$$$$$$$$$$ NÃO ACHOU O PROFESSOR DE ID "+ id + " $$$$$$$$$$$");
+            return this.retornaErroProfessor("EDIT ERROR: Professor #" + id + " não encontrado no banco!");
         }
     }
 
