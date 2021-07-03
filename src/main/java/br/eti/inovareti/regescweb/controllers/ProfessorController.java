@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,24 +29,32 @@ public class ProfessorController {
         return mv;
     }
 
-    @GetMapping("/professor/new")
+    @GetMapping("/professores/new")
     public ModelAndView nnew() {
         ModelAndView mv = new ModelAndView("htmls/professores/new");
-        mv.addObject("statusProfessor", StatusProfessor.values());
+        mv.addObject("listStatusProfessor", StatusProfessor.values());
         return mv;
     }
 
     // Web Parameter Tampering.
     @PostMapping("/professores")
-    public String create(@Valid RequisicaoNovoProfessor novoProfessor, BindingResult bindingResult) {
+    public ModelAndView create(@Valid RequisicaoNovoProfessor novoProfessor, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             System.out.println("\n********** FORMULARIO COM ERROS **********\n");
-            return "redirect:/professor/new";
+            ModelAndView mv = new ModelAndView("htmls/professores/new");
+            mv.addObject("listStatusProfessor", StatusProfessor.values());
+            return mv;
         }
         else {
             Professor professor = novoProfessor.toProfessor();
             this.professorRepository.save(professor);
-            return "redirect:/professores";
+            return new ModelAndView("redirect:/professores");
         }
+    }
+
+    @ModelAttribute(value = "requisicaoNovoProfessor")
+    public RequisicaoNovoProfessor getRequisicaoNovoProfessor()
+    {
+        return new RequisicaoNovoProfessor();
     }
 }
